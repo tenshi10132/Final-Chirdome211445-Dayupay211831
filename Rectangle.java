@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.awt.geom.*;
 
 public class Rectangle {
     public int x, y, width, height, textSize;
