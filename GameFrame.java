@@ -13,14 +13,14 @@ public class GameFrame{
     public int mouseX = 0;
     public int mouseY = 0;
     public int counter = 0;
-    public String returnString;
+    public String returnString = " ";
 
 
 
     public GameFrame() {
         frame = new JFrame();
         header = new JLabel("Header");
-        footer = new JPanel(new GridLayout(1,2));
+        footer = new JPanel(new GridLayout(2,1));
         button = new JButton("Button");
         text = new JTextArea("Footer");
         gc = new GameCanvas();
@@ -69,11 +69,14 @@ public class GameFrame{
     public void setUpMouseListener(){
         MouseListener ml = new MouseListener(){
             public void mousePressed(MouseEvent me){
+                System.out.println("Mouse Pressed");
                 mousePressed = true;
                 mouseX = me.getX();
                 mouseY = me.getY();
+                System.out.println(mouseX + " " + mouseY);
             }
             public void mouseReleased(MouseEvent me){
+                System.out.println("Mouse Released");
                 mousePressed = false;
             }
             public void mouseEntered(MouseEvent me){}
@@ -86,6 +89,7 @@ public class GameFrame{
         ActionListener al = new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                 returnString = text.getText();
+                System.out.println("Button Pressed");
             }
         };
         button.addActionListener(al);
@@ -109,6 +113,9 @@ public class GameFrame{
     }
 
     //Mutator Methods
+    public void addCouunter(){
+        counter++;
+    }
     public void resetCounter(){
         counter = 0;
     }
@@ -120,7 +127,7 @@ public class GameFrame{
         gf.setUpMouseListener();
         gf.setUpButtonListener();
 
-        //Reveal Runner Task
-        gf.getGC().returnTask(5);
+        Task t = new Stirring(gf);
+        t.start();
     }
 }

@@ -12,9 +12,9 @@ public class GameCanvas extends JComponent {
         typingTest = new ArrayList<Rectangle>();
         //Sentence [0-1]
             typingTest.add(new Rectangle(0,280,600,40,Color.GRAY,
-                "There is no way you can type this unmanageable, problematical, unaccomodating, troublesome,"));
+                "There is no way you can type this unmanageable "));
             typingTest.add(new Rectangle(0,320,600,40,Color.GRAY,
-                "perplexing, formidable, uncooperative, intransigent description of a sentence in under 3 seconds."));
+                "description of a sentence in under 3 seconds."));
         //Instructions [2]
             typingTest.add(new Rectangle(0,200,600,40,Color.DARK_GRAY,
                 "Type the sentence below as fast as you can."));
@@ -46,9 +46,9 @@ public class GameCanvas extends JComponent {
         stirring = new ArrayList<Rectangle>();
         //Background [0-3]
             stirring.add(new Rectangle(0,0,300,300,Color.LIGHT_GRAY));
-            stirring.add(new Rectangle(300,0,300,300,Color.LIGHT_GRAY));
             stirring.add(new Rectangle(0,300,300,300,Color.LIGHT_GRAY));
             stirring.add(new Rectangle(300,300,300,300,Color.LIGHT_GRAY));
+            stirring.add(new Rectangle(300,0,300,300,Color.LIGHT_GRAY));
         //Instructions [4]
             stirring.add(new Rectangle(140,0,320,30,Color.GRAY,
                 "Do 30 revolutions around the red square as fast as you can!"));
@@ -126,6 +126,7 @@ public class GameCanvas extends JComponent {
     }
 
     public void returnTask(int i){
+        hideTask();
         for(Rectangle r : getTask(i)){
             r.returnPosition();
             repaint();
