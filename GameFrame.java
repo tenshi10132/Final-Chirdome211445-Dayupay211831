@@ -70,15 +70,15 @@ public class GameFrame{
             public void mouseDragged(MouseEvent me){
                 mousePressed = true;
                 mouseX = me.getX();
-                mouseY = me.getY()-30;
+                mouseY = me.getY();
             }
             public void mouseMoved(MouseEvent me){
                 mousePressed = false;
                 mouseX = me.getX();
-                mouseY = me.getY()-30;
+                mouseY = me.getY();
             }
         };
-        frame.addMouseMotionListener(ml);
+        frame.getContentPane().addMouseMotionListener(ml);
     }
     public void setUpButtonListener(){
         ActionListener al = new ActionListener(){
