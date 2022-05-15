@@ -27,20 +27,19 @@ public class GameCanvas extends JComponent {
             buttonSmash.add(new Rectangle(280,300,40,40,Color.RED,"0"));
         
         dragAndDrop = new ArrayList<Rectangle>();
-        //Background [0-1]
+        //Background [0]
             dragAndDrop.add(new Rectangle(0,0,300,600,Color.GREEN));
-            dragAndDrop.add(new Rectangle(300,0,300,600,Color.LIGHT_GRAY));
-        //Objects [2-7]
+        //Objects [1-6]
             dragAndDrop.add(new Rectangle(350,200,80,85,Color.PINK));
             dragAndDrop.add(new Rectangle(478,500,50,50,Color.MAGENTA));
             dragAndDrop.add(new Rectangle(400,350,75,60,Color.ORANGE));
             dragAndDrop.add(new Rectangle(380,470,75,75,Color.CYAN));
             dragAndDrop.add(new Rectangle(500,45,40,40,Color.BLUE));
             dragAndDrop.add(new Rectangle(510,150,60,80,Color.RED));
-        //Instructions [8]
+        //Instructions [7]
             dragAndDrop.add(new Rectangle(150,0,300,30,Color.GRAY,
                 "Drag and drop everything to the Green Side."));
-        //Counter [9]
+        //Counter [8]
             dragAndDrop.add(new Rectangle(280,30,40,40,Color.RED,"0"));
         
         stirring = new ArrayList<Rectangle>();
@@ -57,7 +56,7 @@ public class GameCanvas extends JComponent {
         
         maze = new ArrayList<Rectangle>();
         //Objects [0-18]
-            maze.add(new Rectangle(0,0,60,60,Color.BLUE, "START"));
+            maze.add(new Rectangle(1,1,60,60,Color.BLUE, "START"));
             maze.add(new Rectangle(60,0,240,60,Color.BLACK));
             maze.add(new Rectangle(60,0,60,180,Color.BLACK));
             maze.add(new Rectangle(180,60,180,60,Color.BLACK));
@@ -78,16 +77,18 @@ public class GameCanvas extends JComponent {
             maze.add(new Rectangle(540,540,60,60,Color.RED, "FINISH"));
         
         runner = new ArrayList<Rectangle>();
-        //Objects [0-8]
-            runner.add(new Rectangle(0,0,600,60,Color.RED, "FINISH LINE"));
-            runner.add(new Rectangle(380,60,220,60,Color.BLACK));
-            runner.add(new Rectangle(0,120,300,60,Color.BLACK));
-            runner.add(new Rectangle(420,180,180,60,Color.BLACK));
-            runner.add(new Rectangle(0,240,180,60,Color.BLACK));
-            runner.add(new Rectangle(300,300,300,60,Color.BLACK));
-            runner.add(new Rectangle(0,420,360,60,Color.BLACK));
-            runner.add(new Rectangle(480,480,120,60,Color.BLACK));
-            runner.add(new Rectangle(120,560,40,40,Color.GREEN, "YOU"));
+        //Objects [0-10]
+            runner.add(new Rectangle(0,0,600,50,Color.RED, "FINISH LINE"));
+            runner.add(new Rectangle(100,100,500,30,Color.BLACK));
+            runner.add(new Rectangle(0,200,300,30,Color.BLACK));
+            runner.add(new Rectangle(400,200,200,30,Color.BLACK));
+            runner.add(new Rectangle(200,300,400,30,Color.BLACK));
+            runner.add(new Rectangle(0,300,100,30,Color.BLACK));
+            runner.add(new Rectangle(0,400,400,30,Color.BLACK));
+            runner.add(new Rectangle(500,400,100,30,Color.BLACK));
+            runner.add(new Rectangle(300,500,300,30,Color.BLACK));
+            runner.add(new Rectangle(0,500,200,30,Color.BLACK));
+            runner.add(new Rectangle(120,570,30,30,Color.GREEN, "YOU"));
         
         winScreen = new ArrayList<Rectangle>();
             winScreen.add(new Rectangle(200,250,200,50,Color.GREEN,

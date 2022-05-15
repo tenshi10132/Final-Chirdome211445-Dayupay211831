@@ -65,7 +65,11 @@ public class Rectangle {
         y += speed;
     }    
     public void setText(String text){
-        this.text=text;
+        this.text = text;
+    }
+    public void setPosition(int x,int y){
+        this.x = x;
+        this.y = y;
     }
     public void returnPosition(){
         x = origX;
@@ -82,7 +86,7 @@ public class Rectangle {
             y+height>=r.getY() && y<=r.getY()+r.getHeight());
     }
     public boolean isColliding(int mouseX, int mouseY){
-        return(mouseX>x && mouseX<x+width && 
-            mouseY>y && mouseY<y+height);
+        return(mouseX>=x && mouseX<=(x+width) && 
+            mouseY>=y && mouseY<=(y+height));
     }
 }

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 public class GameFrame{
     private JFrame frame;
@@ -9,13 +10,11 @@ public class GameFrame{
     private JButton button;
     private JTextArea text;
     public GameCanvas gc;
-    public boolean mousePressed;
+    public boolean mousePressed = false;
     public int mouseX = 0;
     public int mouseY = 0;
     public int counter = 0;
     public String returnString = " ";
-
-
 
     public GameFrame() {
         frame = new JFrame();
@@ -32,12 +31,15 @@ public class GameFrame{
         frame.setTitle("Mission Marathon : Complete the Quest (Don't be the Last to Pass the Task)");
         frame.getContentPane().add(gc, BorderLayout.CENTER);
         gc.setPreferredSize(new Dimension(600,600));
-        frame.getContentPane().add(header, BorderLayout.NORTH);
+        frame.getContentPane().add(header, BorderLayout.EAST);
+        header.setFocusable(true);
         frame.getContentPane().add(footer, BorderLayout.SOUTH);
         footer.add(text);
         footer.add(button);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        text.setFocusable(false);
+        button.setFocusable(false);
         frame.setFocusable(true);
         frame.setVisible(true);
     }
@@ -48,17 +50,14 @@ public class GameFrame{
                 switch (keyCode){
                     case KeyEvent.VK_SPACE :
                         counter++;
-                        System.out.println("Counter = " + counter);
                         break;
                     case KeyEvent.VK_LEFT :
-                        gc.getTask(5).get(8).moveX(-10);
+                        gc.getTask(5).get(10).moveX(-10);
                         gc.repaint();
-                        System.out.println("Left Pressed");
                         break;
                     case KeyEvent.VK_RIGHT :
-                        gc.getTask(5).get(8).moveX(10);
+                        gc.getTask(5).get(10).moveX(10);
                         gc.repaint();
-                        System.out.println("Right Pressed");
                         break;
                 }}
             public void keyTyped(KeyEvent ke){}
@@ -67,23 +66,19 @@ public class GameFrame{
         frame.addKeyListener(kl);
     }
     public void setUpMouseListener(){
-        MouseListener ml = new MouseListener(){
-            public void mousePressed(MouseEvent me){
-                System.out.println("Mouse Pressed");
+        MouseMotionListener ml = new MouseMotionListener(){
+            public void mouseDragged(MouseEvent me){
                 mousePressed = true;
                 mouseX = me.getX();
-                mouseY = me.getY();
-                System.out.println(mouseX + " " + mouseY);
+                mouseY = me.getY()-30;
             }
-            public void mouseReleased(MouseEvent me){
-                System.out.println("Mouse Released");
+            public void mouseMoved(MouseEvent me){
                 mousePressed = false;
+                mouseX = me.getX();
+                mouseY = me.getY()-30;
             }
-            public void mouseEntered(MouseEvent me){}
-            public void mouseExited(MouseEvent me){}
-            public void mouseClicked(MouseEvent me){}
         };
-        frame.addMouseListener(ml);
+        frame.addMouseMotionListener(ml);
     }
     public void setUpButtonListener(){
         ActionListener al = new ActionListener(){
@@ -105,6 +100,9 @@ public class GameFrame{
     public int getMouseY(){
         return mouseY;
     }
+    public boolean mouseIsPressed(){
+        return mousePressed;
+    }
     public int getCounter(){
         return counter;
     }
@@ -113,11 +111,17 @@ public class GameFrame{
     }
 
     //Mutator Methods
-    public void addCouunter(){
-        counter++;
+    public void setTextFocusable(boolean b){
+        text.setFocusable(b);
     }
     public void resetCounter(){
         counter = 0;
+    }
+    public void resetText(){
+        text.setText("");
+    }
+    public void setHeader(String string){
+        header.setText(string);
     }
 
     public static void main(String[] args){
@@ -127,7 +131,24 @@ public class GameFrame{
         gf.setUpMouseListener();
         gf.setUpButtonListener();
 
-        Task t = new Stirring(gf);
-        t.start();
+        ArrayList<Task> t = new ArrayList<Task>();
+        t.add(new TypingTest(gf));
+        t.add(new ButtonSmash(gf));
+        t.add(new DragAndDrop(gf));
+        t.add(new Stirring(gf));
+        t.add(new Maze(gf));
+        t.add(new Runner(gf));
+        
+        Scanner sc = new Scanner(System.in);
+        int input;
+        do{
+            input = Integer.parseInt(sc.next());
+            if(input>5||input<0){
+                break;
+            }
+
+            t.get(input).start();
+            t.get(input).stop();
+        }while(true);
     }
 }
