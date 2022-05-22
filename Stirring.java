@@ -21,7 +21,8 @@ public class Stirring implements Task {
     }
 
     @Override
-    public void start(){
+    public void begin(){
+        counter = 0;
         status = 0;
         running = true;
         gf.getGC().returnTask(3);
@@ -44,7 +45,7 @@ public class Stirring implements Task {
             }else if(q3.isColliding(momentX, momentY)){
                 if(q4.isColliding(gf.getMouseX(),gf.getMouseY())){
                     momentX = gf.getMouseX();
-                    momentY = gf.getMouseY();                   
+                    momentY = gf.getMouseY();
                 }
             }else{
                 if(q1.isColliding(gf.getMouseX(),gf.getMouseY())){

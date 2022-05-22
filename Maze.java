@@ -15,14 +15,14 @@ public class Maze implements Task{
             w.add(gf.getGC().getTask(4).get(i));
         }
         finish = gf.getGC().getTask(4).get(18);
-        
+
         status = 2;
         running = false;
         finished = false;
     }
 
     @Override
-    public void start(){
+    public void begin(){
         status = 0;
         running = false;
         finished = false;
@@ -39,7 +39,7 @@ public class Maze implements Task{
             }
         }
 
-        while(!finished&&running){            
+        while(!finished&&running){
             System.out.print("");
             for(Rectangle w : w){
                 if(w.isColliding(gf.getMouseX(),gf.getMouseY())){

@@ -16,20 +16,21 @@ public class DragAndDrop implements Task{
             b[i] = false;
         }
         r = gf.getGC().getTask(2).get(8);
-        
+
         counter = 0;
         status = 2;
         running = false;
     }
 
     @Override
-    public void start(){
+    public void begin(){
+        counter = 0;
         status = 0;
         running = true;
         gf.getGC().returnTask(2);
 
         System.out.println("DragAndDrop Started");
-        
+
         while(counter<6&&running){
             System.out.print("");
             for(int i=0;i<6;i++){
@@ -53,7 +54,7 @@ public class DragAndDrop implements Task{
                 }
             }
             holding = (holder>1);
-            
+
             counter = 0;
             for(boolean b : b){
                 if(b){

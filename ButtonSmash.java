@@ -8,7 +8,7 @@ public class ButtonSmash implements Task {
         this.gf = gf;
 
         r = gf.getGC().getTask(1).get(1);
-        
+
         gf.resetCounter();
         counter = gf.getCounter();
         status = 2;
@@ -16,7 +16,8 @@ public class ButtonSmash implements Task {
     }
 
     @Override
-    public void start(){
+    public void begin(){
+        counter = 0;
         status = 0;
         running = true;
         gf.getGC().returnTask(1);

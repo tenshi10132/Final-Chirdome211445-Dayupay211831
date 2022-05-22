@@ -1,12 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 
 public class GameFrame{
     private JFrame frame;
-    private JLabel header;
-    private JPanel footer;
+    private JLabel playerId, timer, myPoints, enemyPoints;
+    private JPanel header, footer;
     private JButton button;
     private JTextArea text;
     public GameCanvas gc;
@@ -16,9 +15,13 @@ public class GameFrame{
     public int counter = 0;
     public String returnString = " ";
 
-    public GameFrame() {
+    public GameFrame(int playerNum) {
         frame = new JFrame();
-        header = new JLabel("Header");
+        header = new JPanel(new GridLayout(10, 1));
+        playerId = new JLabel("Player #" + playerNum + "                  .");
+        timer = new JLabel("2:00");
+        myPoints = new JLabel("My Points: " + 0);
+        enemyPoints = new JLabel("Enemy Points: " + 0);
         footer = new JPanel(new GridLayout(2,1));
         button = new JButton("Button");
         text = new JTextArea("Footer");
@@ -32,13 +35,16 @@ public class GameFrame{
         frame.getContentPane().add(gc, BorderLayout.CENTER);
         gc.setPreferredSize(new Dimension(600,600));
         frame.getContentPane().add(header, BorderLayout.EAST);
-        header.setFocusable(true);
+        header.add(playerId);
+        header.add(timer);
+        header.add(myPoints);
+        header.add(enemyPoints);
         frame.getContentPane().add(footer, BorderLayout.SOUTH);
         footer.add(text);
         footer.add(button);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        text.setFocusable(false);
+        text.setFocusable(true);
         button.setFocusable(false);
         frame.setFocusable(true);
         frame.setVisible(true);
@@ -93,7 +99,7 @@ public class GameFrame{
     //Accessor Methods
     public GameCanvas getGC(){
         return gc;
-    }    
+    }
     public int getMouseX(){
         return mouseX;
     }
@@ -120,35 +126,35 @@ public class GameFrame{
     public void resetText(){
         text.setText("");
     }
-    public void setHeader(String string){
-        header.setText(string);
-    }
+    // public void setHeader(String string){
+    //     header.setText(string);
+    // }
 
-    public static void main(String[] args){
-        GameFrame gf = new GameFrame();
-        gf.setUpGUI();
-        gf.setUpKeyListener();
-        gf.setUpMouseListener();
-        gf.setUpButtonListener();
+    // public static void main(String[] args){
+    //     GameFrame gf = new GameFrame();
+    //     gf.setUpGUI();
+    //     gf.setUpKeyListener();
+    //     gf.setUpMouseListener();
+    //     gf.setUpButtonListener();
+    //
+    //     ArrayList<Task> t = new ArrayList<Task>();
+    //     t.add(new TypingTest(gf));
+    //     t.add(new ButtonSmash(gf));
+    //     t.add(new DragAndDrop(gf));
+    //     t.add(new Stirring(gf));
+    //     t.add(new Maze(gf));
+    //     t.add(new Runner(gf));
+    //
+    //     Scanner sc = new Scanner(System.in);
+    //     int input;
+    //     do{
+    //         input = Integer.parseInt(sc.next());
+    //         if(input>5||input<0){
+    //             break;
+    //         }
+    //
+    //         t.get(input).begin();
+    //         t.get(input).stop();
+    //     }while(true);
 
-        ArrayList<Task> t = new ArrayList<Task>();
-        t.add(new TypingTest(gf));
-        t.add(new ButtonSmash(gf));
-        t.add(new DragAndDrop(gf));
-        t.add(new Stirring(gf));
-        t.add(new Maze(gf));
-        t.add(new Runner(gf));
-        
-        Scanner sc = new Scanner(System.in);
-        int input;
-        do{
-            input = Integer.parseInt(sc.next());
-            if(input>5||input<0){
-                break;
-            }
-
-            t.get(input).start();
-            t.get(input).stop();
-        }while(true);
-    }
 }

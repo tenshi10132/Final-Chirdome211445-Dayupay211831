@@ -15,7 +15,8 @@ public class TypingTest implements Task {
     }
 
     @Override
-    public void start(){
+    public void begin(){
+        returnString = " ";
         status = 0;
         running = true;
 

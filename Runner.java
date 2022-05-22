@@ -17,14 +17,14 @@ public class Runner implements Task{
             o.add(gf.getGC().getTask(5).get(i));
         }
         you = gf.getGC().getTask(5).get(10);
-        
+
         status = 2;
         running = false;
         finished = false;
     }
 
     @Override
-    public void start(){
+    public void begin(){
         Timer animationTimer = new Timer(50, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae){
@@ -66,14 +66,14 @@ public class Runner implements Task{
         }
         running = false;
     }
-    
+
     @Override
     public void stop(){
         status = 2;
         running = false;
         gf.getGC().hideTask(5);
     }
-    
+
     @Override
     public int getStatus(){
         return status;

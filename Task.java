@@ -1,5 +1,5 @@
 public interface Task {
-    public void start();
+    public void begin();
     public void stop();
     public int getStatus();
 }
