@@ -18,6 +18,7 @@ public class ButtonSmash implements Task {
     @Override
     public void begin(){
         counter = 0;
+        gf.resetCounter();
         status = 0;
         running = true;
         gf.getGC().returnTask(1);
