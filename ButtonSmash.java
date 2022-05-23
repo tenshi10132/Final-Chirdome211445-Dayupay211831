@@ -31,12 +31,11 @@ public class ButtonSmash implements Task {
 
         System.out.println("ButtonSmash Finished");
         if(running){
-            gf.getGC().returnTask(6);
             status++;
         }else{
             status--;
-            gf.getGC().returnTask(7);
         }
+        gf.getGC().hideTask(1);
         running = false;
         gf.resetCounter();
     }

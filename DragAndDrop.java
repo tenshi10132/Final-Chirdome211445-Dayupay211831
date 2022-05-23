@@ -67,12 +67,11 @@ public class DragAndDrop implements Task{
         System.out.println("DragAndDrop Finished");
 
         if(running){
-            gf.getGC().returnTask(6);
             status++;
         }else{
-            gf.getGC().returnTask(7);
             status--;
         }
+        gf.getGC().hideTask(2);
         running = false;
     }
 
@@ -84,7 +83,7 @@ public class DragAndDrop implements Task{
     }
 
     @Override
-    public int getStatus(){
+    public int getStatus(){         
         return status;
     }
 }

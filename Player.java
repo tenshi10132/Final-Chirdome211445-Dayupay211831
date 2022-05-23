@@ -1,12 +1,11 @@
-
 import java.util.*;
 
 public class Player{
 
   private GameFrame gf;
   private ArrayList<Task> t;
-  private int playerNum;
-  private boolean playing = false;
+  private int playerNum, taskStatus, points;
+  private boolean playing;
 
   public Player(int i){
     playerNum = i;
@@ -24,10 +23,7 @@ public class Player{
     t.add(new Maze(gf));
     t.add(new Runner(gf));
 
-  }
-
-  public void startGame(){
-    playing = true;
+    playing = false;
   }
 
   public void stopGame(){
@@ -35,22 +31,37 @@ public class Player{
   }
 
   public void playGame(){
-    Collections.shuffle(t);
-    int num = 0;
-    while (playing){
-      if (num <= 5){
-        t.get(num).begin();
-        t.get(num).stop();
-        num++;
-        continue;
-      
-      }
-      if (num>5){
-        num = 0;
-        t.get(num).begin();
-        t.get(num).stop();
-        num++;
-        continue;
+      Thread play = new PlayGame();
+      play.start();
+  }
+
+  private class PlayGame extends Thread{
+    
+    public PlayGame(){
+        playing = true;
+        taskStatus = 2;
+    }
+
+    @Override
+    public void run(){
+      Collections.shuffle(t);
+      int num = 0;
+      while (playing){
+        System.out.println("Game is playing");
+        if (num <= 5){
+          t.get(num).begin();
+          if(t.get(num).getStatus()==1){
+            points++;
+            gf.setMyPoints(points);
+            System.out.println("One point added: " + points);
+          }
+          t.get(num).stop();
+          num++;
+          continue;
+        }else{
+          num = 0;
+          continue;
+        }
       }
     }
   }
@@ -58,24 +69,11 @@ public class Player{
   public GameFrame getGF(){
     return gf;
   }
-
-  // @Override
-  // public void run(){
-  //   try{
-  //     playing = true;
-  //     playGame();
-  //     for(int i=120; i>0; i--){
-  //       gameTime-=1;
-  //       System.out.println("Seconds remaining: "+ gameTime);
-  //       Thread.sleep(1000);
-  //     }
-  //       if(gameTime==0){
-  //         playing = false;
-  //       }
-
-  //   } catch(InterruptedException ex){
-  //     System.out.println("Timer and thread error");
-  //   }
-    
+  public ArrayList<Task> getTaskArrayList(){
+      return t;
   }
+  public int getPoints(){
+    return points;
+  }
+}
 

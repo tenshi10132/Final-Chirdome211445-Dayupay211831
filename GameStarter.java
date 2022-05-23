@@ -1,22 +1,24 @@
 import java.net.*;
 import java.io.*;
-// import java.util.*;
+import java.util.*;
 
 public class GameStarter{
 
   private Player client;
-  private int playerId, myScore, enemyScore, timerCount;
+  private int playerId, timerCount;
+  private int myPoints = 0;
+  private int enemyPoints = 0;
   private ReadFromServer rfsRunnable;
   private WriteToServer wtsRunnable;
 
 
   public GameStarter(){
-    // System.out.println("Please type in server");
-    // Scanner sc = new Scanner(System.in);
-    // String server = sc.next();
+    System.out.println("Please type in server");
+    Scanner sc = new Scanner(System.in);
+    String server = sc.next();
 
     try{
-      Socket s = new Socket("localhost", 47000);
+      Socket s = new Socket(server, 47000);
       DataInputStream in = new DataInputStream(s.getInputStream());
       DataOutputStream out = new DataOutputStream(s.getOutputStream());
       playerId = in.readInt();
@@ -25,8 +27,7 @@ public class GameStarter{
         System.out.println("Waiting for Player #2");
       }
       rfsRunnable = new ReadFromServer(in);
-      wtsRunnable = new WriteToServer(out);
-      wtsRunnable.sendReady();
+      wtsRunnable = new WriteToServer(out);      
       rfsRunnable.waitForStartMsg();
     }catch(IOException ex){
       System.out.println("Server Error");
@@ -44,8 +45,23 @@ public class GameStarter{
     public void run(){
       try{
         while(true){
-          enemyScore = dataIn.readInt();
+          enemyPoints = dataIn.readInt();
+          client.getGF().setEnemyPoints(enemyPoints);
           timerCount = dataIn.readInt();
+          client.getGF().setTimer(timerCount);
+          if(timerCount == 0){
+              client.stopGame();
+              for(Task t : client.getTaskArrayList()){
+                  t.stop();
+              }
+              if(myPoints>enemyPoints){
+                client.getGF().getGC().returnTask(6);
+              }else if(myPoints<enemyPoints){
+                client.getGF().getGC().returnTask(7);
+              }else{
+                client.getGF().getGC().returnTask(8);
+              }
+          }
         }
       }catch(IOException ex){
         System.out.println("IOException from RFS run()");
@@ -55,17 +71,18 @@ public class GameStarter{
     public void waitForStartMsg(){
       try{
         String startMsg = dataIn.readUTF();
-        if(startMsg.equals("We now have 2 players. Go!")){
-          Thread readThread = new Thread(rfsRunnable);
-          Thread writeThread = new Thread(wtsRunnable);
-          readThread.start();
-          writeThread.start();
-        }
+        Thread readThread = new Thread(rfsRunnable);
+        Thread writeThread = new Thread(wtsRunnable);
+        readThread.start();
+        writeThread.start();
+        client.playGame();
       }catch(IOException ex){
         System.out.println("IOException from waitForStartMsg()");
       }
     }
   }
+
+
   private class WriteToServer implements Runnable{
     private DataOutputStream dataOut;
 
@@ -77,7 +94,8 @@ public class GameStarter{
     public void run(){
       try{
         while(true){
-          dataOut.writeInt(myScore);
+          myPoints = client.getPoints();
+          dataOut.writeInt(myPoints);
           dataOut.flush();
           try{
             Thread.sleep(25);
@@ -89,22 +107,10 @@ public class GameStarter{
         System.out.println("IOException from WTS run()");
       }
     }
-
-    public void sendReady(){
-      try{
-        dataOut.writeUTF(client.getGF().getReturnString());        
-      } catch (IOException ex ){
-        System.out.println("Ready Error");
-      }
-    }
   }
-
-
 
 
   public static void main(String[] args) {
     GameStarter gs = new GameStarter();
   }
-
-
 }

@@ -59,12 +59,11 @@ public class Stirring implements Task {
         System.out.println("Stirring Finished");
 
         if(running){
-            gf.getGC().returnTask(6);
             status++;
         }else{
-            gf.getGC().returnTask(7);
             status--;
         }
+        gf.getGC().hideTask(3);
         running = false;
     }
 

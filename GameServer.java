@@ -5,15 +5,11 @@ import java.io.*;
 public class GameServer {
 
   private ServerSocket ss;
-  private int numPlayers, maxPlayers, p1Score, p2Score, timerCount;
-  private String ready1 = " ";
-  private String ready2 = " ";
-  private Socket p1Socket;
-  private Socket p2Socket;
-  private ReadFromClient p1ReadRunnable;
-  private ReadFromClient p2ReadRunnable;
-  private WriteToClient p1WriteRunnable;
-  private WriteToClient p2WriteRunnable;
+  private int numPlayers, maxPlayers, p1Points, p2Points;
+  private Socket p1Socket, p2Socket;
+  private Countdown cd;
+  private ReadFromClient p1ReadRunnable, p2ReadRunnable;
+  private WriteToClient p1WriteRunnable, p2WriteRunnable;
 
 
   public GameServer(){
@@ -43,7 +39,7 @@ public class GameServer {
         System.out.println("Player #"+numPlayers+" has connected.");
 
         ReadFromClient rfc = new ReadFromClient(numPlayers, in);
-          WriteToClient wtc = new WriteToClient(numPlayers, out);
+        WriteToClient wtc = new WriteToClient(numPlayers, out);
 
           if(numPlayers == 1){
             p1Socket = s;
@@ -55,14 +51,16 @@ public class GameServer {
             p2WriteRunnable = wtc;
             p1WriteRunnable.sendStartMsg();
             p2WriteRunnable.sendStartMsg();
-            // Thread readThread1 = new Thread(p1ReadRunnable);
-            // Thread readThread2 = new Thread(p2ReadRunnable);
-            // readThread1.start();
-            // readThread2.start();
-            // Thread writeThread1 = new Thread(p1WriteRunnable);
-            // Thread writeThread2 = new Thread(p2WriteRunnable);
-            // writeThread1.start();
-            // writeThread2.start();
+            Thread readThread1 = new Thread(p1ReadRunnable);
+            Thread readThread2 = new Thread(p2ReadRunnable);
+            readThread1.start();
+            readThread2.start();
+            Thread writeThread1 = new Thread(p1WriteRunnable);
+            Thread writeThread2 = new Thread(p2WriteRunnable);
+            writeThread1.start();
+            writeThread2.start();
+            cd = new Countdown();
+            cd.start();
           }
       }
 
@@ -89,26 +87,13 @@ public class GameServer {
       try{
         while(true){
           if(playerId == 1){
-            p1Score = dataIn.readInt();
+            p1Points = dataIn.readInt();
           }else{
-            p2Score = dataIn.readInt();
+            p2Points = dataIn.readInt();
           }
         }
       }catch(IOException ex){
         System.out.println("IOException from RFC run()");
-      }
-    }
-
-    public void getReady(){
-      try{
-        if(playerId == 1){
-          ready1 = dataIn.readUTF();
-        }else{
-          ready2 = dataIn.readUTF();
-        }
-        
-      }catch(IOException ex){
-        System.out.println("IOException from getReady()");
       }
     }
   }
@@ -128,11 +113,11 @@ public class GameServer {
       try{
         while(true){
           if(playerId == 1){
-            dataOut.writeInt(p2Score);
+            dataOut.writeInt(p2Points);
           }else{
-            dataOut.writeInt(p1Score);
+            dataOut.writeInt(p1Points);
           }
-          dataOut.writeInt(timerCount);
+          dataOut.writeInt(cd.getTime());
           dataOut.flush();
 
           try{
@@ -148,9 +133,7 @@ public class GameServer {
 
     public void sendStartMsg(){
       try{
-        if(ready1.equals(ready2)){
-          dataOut.writeUTF("We now have 2 players. Go!");
-        }
+        dataOut.writeUTF("We now have 2 players. Go!");
       }catch(IOException ex){
         System.out.println("IOException from sendStartMsg()");
       }

@@ -4,7 +4,7 @@ import java.util.*;
 
 
 public class GameCanvas extends JComponent {
-    public ArrayList<Rectangle> typingTest, buttonSmash, dragAndDrop, stirring, maze, runner, winScreen, loseScreen;
+    public ArrayList<Rectangle> typingTest, buttonSmash, dragAndDrop, stirring, maze, runner, winScreen, loseScreen, tieScreen;
     public ArrayList<ArrayList<Rectangle>> tasks = new ArrayList<ArrayList<Rectangle>>();
     Graphics2D g2d;
 
@@ -91,16 +91,16 @@ public class GameCanvas extends JComponent {
             runner.add(new Rectangle(120,570,30,30,Color.GREEN, "YOU"));
         
         winScreen = new ArrayList<Rectangle>();
-            winScreen.add(new Rectangle(200,250,200,50,Color.GREEN,
+            winScreen.add(new Rectangle(200,250,200,100,Color.GREEN,
                 "CONGRATULATIONS! YOU WIN!"));
-            winScreen.add(new Rectangle(200,300,200,50,Color.GREEN,
-                "Plus one point!"));
         
         loseScreen = new ArrayList<Rectangle>();
-            loseScreen.add(new Rectangle(200,250,200,50,Color.RED,
+            loseScreen.add(new Rectangle(200,250,200,100,Color.RED,
                 "TOO BAD! YOU LOSE!"));
-            loseScreen.add(new Rectangle(200,300,200,50,Color.RED,
-                "No new points added"));
+
+        tieScreen = new ArrayList<Rectangle>();
+            tieScreen.add(new Rectangle(200,250,200,100,Color.BLUE,
+                "DAS CRAZY! ISSA TIE!"));
 
         tasks.add(typingTest);
         tasks.add(buttonSmash);
@@ -110,6 +110,7 @@ public class GameCanvas extends JComponent {
         tasks.add(runner);
         tasks.add(winScreen);
         tasks.add(loseScreen);
+        tasks.add(tieScreen);
     }
     
     @Override

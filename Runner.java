@@ -58,12 +58,11 @@ public class Runner implements Task{
 
         System.out.println("Runner Finished");
         if(finished){
-            gf.getGC().returnTask(6);
             status++;
         }else{
-            gf.getGC().returnTask(7);
             status--;
         }
+        gf.getGC().hideTask(5);
         running = false;
     }
 

@@ -29,12 +29,11 @@ public class TypingTest implements Task {
 
         System.out.println("TypingTest Finished");
         if(returnString.equals(stringToMatch)&&running){
-            gf.getGC().returnTask(6);
             status++;
         }else{
-            gf.getGC().returnTask(7);
             status--;
         }
+        gf.getGC().hideTask(0);
         running = false;
         gf.setTextFocusable(false);
         gf.resetText();

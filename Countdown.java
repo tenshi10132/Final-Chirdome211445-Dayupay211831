@@ -1,15 +1,12 @@
 public class Countdown extends Thread{
 
     private int gameTime = 120;   
-   
-
-    
+       
     @Override
     public void run(){
         try{
-            for(int i=120; i>0; i--){
-               
-                gameTime-=1;
+            for(int i=120; i>0; i--){               
+                gameTime--;
                 System.out.println("Seconds remaining: "+ gameTime);
                 Thread.sleep(1000);
             }
@@ -20,5 +17,8 @@ public class Countdown extends Thread{
         }
     
   }
-    
+
+  public int getTime(){
+      return gameTime;
+  }    
 }

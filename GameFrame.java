@@ -19,7 +19,7 @@ public class GameFrame{
         frame = new JFrame();
         header = new JPanel(new GridLayout(10, 1));
         playerId = new JLabel("Player #" + playerNum + "                  .");
-        timer = new JLabel("2:00");
+        timer = new JLabel("120 seconds");
         myPoints = new JLabel("My Points: " + 0);
         enemyPoints = new JLabel("Enemy Points: " + 0);
         footer = new JPanel(new GridLayout(2,1));
@@ -126,35 +126,13 @@ public class GameFrame{
     public void resetText(){
         text.setText("");
     }
-    // public void setHeader(String string){
-    //     header.setText(string);
-    // }
-
-    // public static void main(String[] args){
-    //     GameFrame gf = new GameFrame();
-    //     gf.setUpGUI();
-    //     gf.setUpKeyListener();
-    //     gf.setUpMouseListener();
-    //     gf.setUpButtonListener();
-    //
-    //     ArrayList<Task> t = new ArrayList<Task>();
-    //     t.add(new TypingTest(gf));
-    //     t.add(new ButtonSmash(gf));
-    //     t.add(new DragAndDrop(gf));
-    //     t.add(new Stirring(gf));
-    //     t.add(new Maze(gf));
-    //     t.add(new Runner(gf));
-    //
-    //     Scanner sc = new Scanner(System.in);
-    //     int input;
-    //     do{
-    //         input = Integer.parseInt(sc.next());
-    //         if(input>5||input<0){
-    //             break;
-    //         }
-    //
-    //         t.get(input).begin();
-    //         t.get(input).stop();
-    //     }while(true);
-
+    public void setTimer(int i){
+        timer.setText(i + " seconds");
+    }
+    public void setMyPoints(int i){
+        myPoints.setText("My Points: " + i);
+    }
+    public void setEnemyPoints(int i){
+        enemyPoints.setText("Enemy Points: " + i);
+    }
 }

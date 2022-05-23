@@ -53,12 +53,11 @@ public class Maze implements Task{
 
         System.out.println("Maze Finished");
         if(finished){
-            gf.getGC().returnTask(6);
             status++;
         }else{
-            gf.getGC().returnTask(7);
             status--;
         }
+        gf.getGC().hideTask(4);
         running = false;
     }
 
