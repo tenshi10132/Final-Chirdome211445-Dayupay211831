@@ -4,7 +4,7 @@ public class Player{
 
   private GameFrame gf;
   private ArrayList<Task> t;
-  private int playerNum, taskStatus, points;
+  private int playerNum, points;
   private boolean playing;
 
   public Player(int i){
@@ -39,7 +39,6 @@ public class Player{
     
     public PlayGame(){
         playing = true;
-        taskStatus = 2;
     }
 
     @Override
